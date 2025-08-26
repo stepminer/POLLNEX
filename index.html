@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>PollNex Insights — Données et Recherche pour le Marché Haïtien</title>
+  <meta name="description" content="PollNex Insights (par Pollnex) dynamise le commerce haïtien avec des données : analyses de marché, conception d’enquêtes en Haïti, échantillonnage, modélisation statistique et tableaux de bord décisionnels pour vendeurs et partenaires." />
+  <link rel="canonical" href="https://www.afepanou.com/insights" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="PollNex Insights — Données et Recherche pour le Marché Haïtien" />
+  <meta property="og:description" content="Des données fiables, des analyses claires. Conçu pour l’économie de marché haïtienne : vendeurs, acheteurs et communauté." />
+  <meta property="og:url" content="https://www.afepanou.com/insights" />
+  <meta property="og:image" content="https://www.afepanou.com/assets/social/insights-og.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PollNex Insights — Données et Recherche pour le Marché Haïtien" />
+  <meta name="twitter:description" content="Des données fiables, des analyses claires. Conçu pour l’économie de marché haïtienne." />
+  <meta name="twitter:image" content="https://www.afepanou.com/assets/social/insights-og.jpg" />
+
+  <!-- SEO extras -->
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#233144" />
+
+  <style>
+    /* (Styles unchanged; see original) */
+    :root{--navy:#233144;--blue:#2196F3;--green:#66BB6A;--gold:#DAA520;--ink:#1A3643;--bg:#F5F7FA;--card:#FFFFFF;--muted:#6B7B8C;--border:#D0D7DE;--shadow:0 10px 24px rgba(0,0,0,.08);--radius:14px;--radius-sm:10px;--max:1200px;}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color:var(--ink); background:var(--bg); line-height:1.6;}
+    a{color:var(--blue);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{left:1rem;top:1rem;width:auto;height:auto;background:#fff;border:2px solid var(--blue);padding:.5rem 1rem;z-index:9999}
+    header.site-header{position:sticky;top:0;z-index:10;background:linear-gradient(90deg, var(--navy), #2b4462);color:#fff;box-shadow:var(--shadow);}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:1rem;max-width:var(--max);margin:0 auto;padding:.75rem 1rem;}
+    .brand{display:flex;align-items:center;gap:.75rem;}
+    .brand img{height:44px;width:auto}
+    .brand h1{font-size:1.05rem;margin:0;line-height:1.1;font-weight:700;letter-spacing:.2px}
+    .brand small{display:block;font-weight:500;color:#cfe7ff}
+    .nav a{color:#e9f4ff;padding:.5rem .75rem;border-radius:8px;font-weight:600}
+    .nav a:hover{background:rgba(255,255,255,.12);text-decoration:none}
+    .nav-links{display:flex;gap:.5rem;align-items:center}
+    .cta-btn{background:var(--gold);color:#222;border-radius:999px;padding:.55rem .9rem;font-weight:800;border:2px solid #0000;}
+    .cta-btn:hover{filter:brightness(.95)}
+    .hero{background:radial-gradient(1200px 500px at 10% -10%, rgba(33,150,243,.18), transparent 60%),radial-gradient(1000px 400px at 110% -20%, rgba(102,187,106,.18), transparent 55%),#fff;border-bottom:1px solid var(--border);}
+    .hero-inner{max-width:var(--max);margin:0 auto;padding:3.5rem 1rem;display:grid;grid-template-columns:1.1fr .9fr;gap:2rem}
+    .hero h2{margin:0 0 .5rem 0;font-size:2.2rem;line-height:1.1;color:var(--navy)}
+    .hero p{font-size:1.1rem;color:var(--muted);margin:.5rem 0 1.2rem}
+    .badges{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}
+    .badge{background:#E8F2FE;color:#12467b;border:1px solid #cfe1ff;border-radius:999px;padding:.35rem .65rem;font-size:.85rem;font-weight:700}
+    .hero-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow)}
+    .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+    .kpi{background:#F8FAFF;border:1px solid var(--border);border-radius:12px;padding:.85rem}
+    .kpi b{display:block;font-size:1.3rem;color:var(--navy)}
+    .kpi small{color:var(--muted)}
+    .container{max-width:var(--max);margin:0 auto;padding:2rem 1rem}
+    .section{margin:2rem 0}
+    .section h3{margin:.25rem 0 1rem;font-size:1.6rem;color:var(--navy)}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;box-shadow:var(--shadow)}
+    figure{margin:0}
+    .img-wrap{background:#f2f6ff;border:1px dashed #cfe1ff;border-radius:12px;display:flex;align-items:center;justify-content:center;height:240px;overflow:hidden}
+    .img-wrap img{width:100%;height:100%;object-fit:cover}
+    ul.list{margin:.5rem 0 0 1rem}
+    ul.list li{margin:.4rem 0}
+    .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    .pillar{border-left:6px solid var(--green);padding:1rem;border-radius:12px;background:#F3FBF5;border:1px solid #ddebe0}
+    .pillar h4{margin:0 0 .35rem;font-size:1.05rem}
+    .pillar p{margin:0;color:#2a5130}
+    .team{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .member{display:grid;grid-template-columns:180px 1fr;gap:1rem;align-items:center}
+    .member img{width:100%;height:180px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+    .member h4{margin:.15rem 0 .25rem;font-size:1.15rem}
+    .member p{margin:.25rem 0;color:var(--muted)}
+    .faq .q{display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;text-align:left;background:#fff;border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;font-weight:700;color:var(--navy);cursor:pointer}
+    .faq .a{display:none;padding:.75rem 1rem .25rem;color:var(--ink)}
+    .faq .item{margin-bottom:.65rem}
+    .contact{background:linear-gradient(180deg,#fff, #f9fbff);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    .contact .card{display:grid;grid-template-columns:1fr 1fr;gap:1rem;align-items:center}
+    footer{background:var(--navy);color:#cfe7ff;padding:1rem}
+    footer .inner{max-width:var(--max);margin:0 auto;display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between}
+    @media (max-width:1000px){.hero-inner{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.grid-3{grid-template-columns:1fr 1fr}.pillars{grid-template-columns:1fr 1fr}.team{grid-template-columns:1fr}.member{grid-template-columns:1fr}.contact .card{grid-template-columns:1fr}}
+    @media (max-width:640px){.nav-links{display:none}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header" role="banner">
+    <nav class="nav" aria-label="Principal">
+      <div class="brand">
+        <img src="POLLNEX_logo.png" alt="Logo PollNex" loading="eager" decoding="async" />
+        <div>
+          <h1>PollNex Insights</h1>
+          <small>Données & Recherche pour le marché haïtien — par Pollnex</small>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#about">À propos</a>
+        <a href="#services">Services</a>
+        <a href="#impact">Impact</a>
+        <a href="#team">Équipe</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact" class="cta-btn">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <div>
+        <h2>Accompagner les organisations et le commerce haïtiens avec des données fiables</h2>
+        <p>Des analyses claires pour des décisions qui renforcent l’économie haïtienne et la diaspora.</p>
+        <div class="badges">
+          <span class="badge">Analyses de marché</span>
+          <span class="badge">Conception d’enquêtes en Haïti</span>
+          <span class="badge">Modélisation statistique</span>
+          <span class="badge">Tableaux de bord pour vendeurs</span>
+        </div>
+        <a href="#services" class="cta-btn">Découvrir les services</a>
+      </div>
+      <aside class="hero-card" aria-label="Vision & KPI Pollnex">
+        <h3 style="margin:.25rem 0 1rem;color:var(--navy)">Vision & Mission</h3>
+        <p style="margin:.25rem 0 .5rem;color:var(--ink)">
+          <strong>Vision.</strong> Être le partenaire de recherche et d’analyse le plus fiable pour les organisations au service d’Haïti et de sa diaspora — transformer les données en décisions confiantes et opportunes.
+        </p>
+        <p style="margin:0 0 1rem;color:var(--ink)">
+          <strong>Mission.</strong> Offrir des enquêtes rigoureuses et adaptées au contexte ainsi que des analyses statistiques afin d’aider nos clients à croître durablement, à améliorer les résultats de leurs programmes et à renforcer l’impact communautaire.
+        </p>
+        <div class="kpis" role="list">
+          <div class="kpi" role="listitem">
+            <b>20+</b>
+            <small>Projets réalisés par an (objectif 12 mois)</small>
+          </div>
+          <div class="kpi" role="listitem">
+            <b>90%</b>
+            <small>Taux de livraison dans les délais et budgets</small>
+          </div>
+          <div class="kpi" role="listitem">
+            <b>80%</b>
+            <small>Taux de clients récurrents tous secteurs</small>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <main id="main" class="container" role="main">
+    <!-- About -->
+    <section id="about" class="section grid-2">
+      <div class="card">
+        <h3>À propos de PollNex Insights</h3>
+        <p>
+          PollNex Insights est un partenariat autour des données animé par Pollnex. Nous livrons des analyses prêtes à l’emploi pour le marché haïtien : compréhension des acheteurs en Haïti et dans la diaspora, valorisation des vendeurs avec des tableaux de bord clairs et pilotage de l’offre, du prix et de la logistique sur la base de preuves.
+        </p>
+        <p>
+          De la conception robuste d’enquêtes et de l’échantillonnage aux modèles statistiques avancés, notre équipe transforme la donnée brute en stratégies de croissance respectant authenticité, qualité et communauté.
+        </p>
+      </div>
+      <figure class="card">
+        <div class="img-wrap" aria-label="Visualisation de données de marché">
+          <img src="image1.png" alt="Exemple de tableau de bord PollNex montrant performance vendeur et tendances acheteurs" loading="lazy" decoding="async" />
+        </div>
+        <figcaption style="color:var(--muted);padding-top:.5rem">Tableaux de bord décisionnels personnalisés pour vendeurs et partenaires PollNex.</figcaption>
+      </figure>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section">
+      <h3>Services adaptés au marché haïtien</h3>
+      <div class="grid-3">
+        <article class="card">
+          <h4>Conception d’enquêtes & Échantillonnage</h4>
+          <p>Programmes d’enquêtes de bout en bout adaptés aux régions haïtiennes et à la diaspora, avec échantillonnage rigoureux et contrôles qualité.</p>
+          <ul class="list">
+            <li>Enquêtes ménages & entreprises</li>
+            <li>Conception de questionnaires (FR/EN/HT)</li>
+            <li>Formation des enquêteurs & protocoles QC</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>Analyses de marché</h4>
+          <p>Suivi de la conversion, de la fidélisation et des catégories qui valorisent l’excellence haïtienne. Segmentation des cohortes diaspora et parcours d’achat.</p>
+          <ul class="list">
+            <li>Tableaux de bord vendeurs</li>
+            <li>Analyse de cohortes & entonnoir</li>
+            <li>Insights sur prix & assortiment</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>Modélisation statistique</h4>
+          <p>De la prévision de la demande à l’estimation d’impact, nous bâtissons des modèles respectueux du contexte local et des réalités de la donnée.</p>
+          <ul class="list">
+            <li>Prévisions & séries temporelles</li>
+            <li>Inférence causale & tests A/B</li>
+            <li>Signaux de risque & fraude pour la confiance</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>Traitement & visualisation de données</h4>
+          <p>Des pipelines de données fiables et des visualisations accessibles en français, anglais et créole haïtien.</p>
+          <ul class="list">
+            <li>ETL & validation</li>
+            <li>Tableaux de bord interactifs</li>
+            <li>Storyboards exécutifs</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>Applications & outils Shiny</h4>
+          <p>Outils de décision personnalisés pour les équipes et vendeurs — l’analyse complexe en un clic.</p>
+          <ul class="list">
+            <li>Applications performance vendeur</li>
+            <li>Portails gestion d’enquêtes</li>
+            <li>Outils de reporting d’impact</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h4>Renforcement de capacités</h4>
+          <p>Ateliers et mentorat pour renforcer les compétences des jeunes et des partenaires — construction de la capacité data en Haïti.</p>
+          <ul class="list">
+            <li>Littératie et visualisation de données</li>
+            <li>Statistiques appliquées au business</li>
+            <li>Programmes mentorat étudiants</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team" class="section">
+      <h3>Notre équipe d’experts</h3>
+      <div class="team">
+        <article class="card member">
+          <img src="experts.jpg" alt="Consultants en économétrie et statistiques Pollnex" loading="lazy" decoding="async" />
+          <div>
+            <h4>Consultants en économétrie & statistiques</h4>
+            <p>Experts chevronnés en méthodes d’enquête, échantillonnage en contexte haïtien et analyses avancées — à l’aise sur de nouveaux secteurs et défis complexes.</p>
+            <ul class="list">
+              <li>Enquêtes nationales & études marché</li>
+              <li>Recherche développement & politiques</li>
+              <li>Analyses marketplace & plateforme</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card member">
+          <img src="image4.png" alt="Solutions sur mesure pour données PollNex" loading="lazy" decoding="async" />
+          <div>
+            <h4>Solutions personnalisées</h4>
+            <p>Nous prenons en charge la donnée pour que vos équipes se concentrent sur le produit, les vendeurs et l’impact — cycles rapides de l’insight à la décision.</p>
+            <ul class="list">
+              <li>Cadres KPI sur mesure</li>
+              <li>Dashboards en self-service pour vendeurs</li>
+              <li>Guides d’évaluation d’impact</li>
+              <li>Applications Shiny</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <h3>Questions fréquentes</h3>
+      <figure class="card" style="margin-bottom:1rem">
+        <div class="img-wrap" aria-label="Illustration FAQ">
+          <img src="clusters.png" alt="Illustration FAQ PollNex Insights" loading="lazy" decoding="async" />
+        </div>
+      </figure>
+      <div class="faq" role="list" aria-label="Liste FAQ">
+        <div class="item" role="listitem">
+          <button class="q" aria-expanded="false" aria-controls="a1" id="q1">
+            Quels services de conseil proposez-vous&nbsp;?
+            <span aria-hidden="true">+</span>
+          </button>
+          <div class="a" id="a1" role="region" aria-labelledby="q1">
+            PollNex Insights (par Pollnex) fournit du conseil statistique, la gestion de méthodes d’enquête, des analyses de marché, le traitement, la visualisation et la modélisation des données pour ministères, organisations et partenaires de plateformes en Haïti et dans la diaspora.
+          </div>
+        </div>
+        <div class="item" role="listitem">
+          <button class="q" aria-expanded="false" aria-controls="a2" id="q2">
+            Quels types d’enquêtes et d’échantillonnages réalisez-vous&nbsp;?
+            <span aria-hidden="true">+</span>
+          </button>
+          <div class="a" id="a2" role="region" aria-labelledby="q2">
+            Nous concevons et réalisons des enquêtes auprès des ménages, entreprises et marchés avec des plans d’échantillonnage adaptés aux régions haïtiennes et à la diaspora. L’évaluation de la qualité et la formation des enquêteurs garantissent des données fiables et représentatives.
+          </div>
+        </div>
+        <div class="item" role="listitem">
+          <button class="q" aria-expanded="false" aria-controls="a3" id="q3">
+            Comment évaluez-vous la qualité de vos services&nbsp;?
+            <span aria-hidden="true">+</span>
+          </button>
+          <div class="a" id="a3" role="region" aria-labelledby="q3">
+            Nous nous comparons aux standards du secteur, appliquons des contrôles qualité stricts et intégrons les retours clients et vendeurs. Nous privilégions la transparence : documentation méthodologique, dictionnaires de données, workflows reproductibles.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Contact -->
+  <section id="contact" class="contact">
+    <div class="container section">
+      <div class="card">
+        <div>
+          <h3>Contactez-nous</h3>
+          <p>Pour toute question ou collaboration, contactez-nous par e-mail. Réponse sous 2 jours ouvrés.</p>
+          <p><a href="mailto:stepminer@gmail.com" class="cta-btn">Email : stepminer@gmail.com</a></p>
+          <p style="color:var(--muted);margin-top:.5rem">Langues : Français • Anglais • Kreyòl Ayisyen</p>
+        </div>
+        <figure>
+          <div class="img-wrap" aria-label="Contact PollNex Insights">
+            <img src="team.png" alt="Contactez l’équipe PollNex Insights" loading="lazy" decoding="async" />
+          </div>
+          <figcaption style="color:var(--muted);padding-top:.5rem">Transformons les données en actions pour Haïti.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <footer role="contentinfo">
+    <div class="inner">
+      <p>&copy; 2024–2025 PollNex. Insights par Pollnex. Tous droits réservés.</p>
+      <p style="font-size:.9rem;color:#a9d3ff">Inspiré par l’ADN de la marque PollNex. Créé pour la communauté, la qualité et l’impact.</p>
+    </div>
+  </footer>
+
+  <!-- Organization & FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Organization",
+        "name":"PollNex",
+        "url":"https://www.afepanou.com",
+        "logo":"https://www.afepanou.com/assets/brand/afepanou-logo.png",
+        "sameAs":[
+          "https://www.linkedin.com/company/afepanou"
+        ],
+        "department":{
+          "@type":"Organization",
+          "name":"PollNex Insights (par Pollnex)",
+          "url":"https://www.afepanou.com/insights"
+        }
+      },
+      {
+        "@type":"FAQPage",
+        "mainEntity":[
+          {
+            "@type":"Question",
+            "name":"Quels services de conseil proposez-vous ?",
+            "acceptedAnswer":{
+              "@type":"Answer",
+              "text":"PollNex Insights (par Pollnex) fournit du conseil statistique, la gestion de méthodes d’enquête, des analyses de marché, le traitement, la visualisation et la modélisation des données pour ministères, organisations et partenaires de plateformes en Haïti et dans la diaspora."
+            }
+          },
+          {
+            "@type":"Question",
+            "name":"Quels types d’enquêtes et d’échantillonnages réalisez-vous ?",
+            "acceptedAnswer":{
+              "@type":"Answer",
+              "text":"Nous concevons et réalisons des enquêtes auprès des ménages, entreprises et marchés avec des plans d’échantillonnage adaptés aux régions haïtiennes et à la diaspora. L’évaluation de la qualité et la formation des enquêteurs garantissent des données fiables et représentatives."
+            }
+          },
+          {
+            "@type":"Question",
+            "name":"Comment évaluez-vous la qualité de vos services ?",
+            "acceptedAnswer":{
+              "@type":"Answer",
+              "text":"Nous nous comparons aux standards du secteur, appliquons des contrôles qualité stricts et intégrons les retours clients et vendeurs. Nous privilégions la transparence : documentation méthodologique, dictionnaires de données, workflows reproductibles."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script>
+    // Accessible FAQ toggle
+    document.querySelectorAll('.faq .q').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        const panel = document.getElementById(btn.getAttribute('aria-controls'));
+        btn.setAttribute('aria-expanded', String(!expanded));
+        panel.style.display = expanded ? 'none' : 'block';
+      });
+    });
+  </script>
+
+  <div aria-hidden="true" style="height:32px"></div>
+</body>
+</html>
