@@ -1,0 +1,127 @@
+# llms.txt — Guidance for AI crawlers and LLM usage
+# FR/EN: Ce fichier exprime les préférences d’usage IA pour ce site. Some agents may not yet honor llms.txt.
+# Learn more: https://aistandard.org/llms-txt (community proposals)
+
+version: 1.0
+site: https://pollnex.netlify.app/
+aliases:
+  - https://www.afepanou.com/insights
+owner: PollNex Insights (par Pollnex)
+contact: mailto:stepminer@gmail.com
+last_updated: 2025-08-26T20:26:48Z
+languages: [fr, en, ht]
+policy_url: https://www.afepanou.com/insights
+
+# Sitemaps (if present)
+sitemaps:
+  - https://pollnex.netlify.app/sitemap.xml
+  - https://www.afepanou.com/sitemap.xml
+
+# High-level policy (global defaults)
+policy:
+  training: disallow              # Do not use content to train/fine-tune models.
+  fine_tuning: disallow
+  evaluation: allow               # Ok for benchmarks if data is not persisted beyond artifacts.
+  indexing: allow                 # General web indexing is allowed.
+  summarization: allow_ephemeral  # Ephemeral use for end users only.
+  embeddings: allow_ephemeral     # No persistent vector storage.
+  storage: no_persistent_copies   # Do not store site copies or long-term caches.
+  caching_max_age: 24h            # If caching is necessary, limit to 24h.
+  derivatives_restriction: noncommercial-noai-redistribution
+  attribution: required           # Cite “PollNex Insights” and the source URL.
+  pii_handling: do_not_collect    # Do not extract/store emails or other PII.
+  ugc_handling: exclude_forms     # Exclude any contact forms or user submissions (if any).
+
+# Crawl etiquette
+crawl:
+  rate_limit: 30/minute/ip
+  crawl_delay: 2s
+  concurrency: 2
+
+# Path guidance (this site is primarily a single-page brochure with static assets)
+paths:
+  allow:
+    - /
+    - /assets/*
+    - /*.png
+    - /*.jpg
+    - /*.jpeg
+    - /*.webp
+  disallow:
+    - /api/*
+    - /auth/*
+    - /admin/*
+    - /dashboard/*
+    - /user/*
+    - /account/*
+    - /settings/*
+    - /webhooks/*
+    - /billing/*
+    - /checkout/*
+    - /_*
+    - /*.json
+    - /*.csv
+    - /*.xlsx
+
+# Agent-specific directives (mirror critical blocks in robots.txt/server rules where applicable)
+agents:
+  # OpenAI
+  - user_agent: GPTBot
+    access: disallow
+  - user_agent: OAI-SearchBot
+    access: disallow
+  - user_agent: ChatGPT-User
+    access: disallow
+
+  # Google (AI extensions only; does not block standard search indexing)
+  - user_agent: Google-Extended
+    access: disallow
+
+  # Anthropic
+  - user_agent: ClaudeBot
+    access: disallow
+  - user_agent: Claude-Web
+    access: disallow
+
+  # Perplexity
+  - user_agent: PerplexityBot
+    access: disallow
+
+  # Apple
+  - user_agent: Applebot-Extended
+    access: disallow
+
+  # Common Crawl
+  - user_agent: CCBot
+    access: disallow
+
+  # Amazon
+  - user_agent: Amazonbot
+    access: disallow
+
+  # ByteDance
+  - user_agent: Bytespider
+    access: disallow
+
+  # Microsoft (keep bingbot for search; block AI previews/training)
+  - user_agent: BingPreview
+    access: disallow
+  - user_agent: MSAI
+    access: disallow
+
+  # You.com
+  - user_agent: YouBot
+    access: disallow
+
+# Compliance requirements
+requirements:
+  - Respect this llms.txt and robots.txt; do not bypass access controls.
+  - Do not create, sell, or redistribute datasets derived from this site’s content.
+  - Do not store or reproduce substantial portions of content or images.
+  - Clearly attribute PollNex Insights with a link to the source page when content is referenced.
+  - Honor “noai” / “noimageai” signals via meta or X-Robots-Tag if present.
+
+# Notes
+notes:
+  - Ce site fournit des informations marketing/présentation et un contact email; n’extrayez pas d’adresses ni d’identifiants personnels.
+  - Pour une application stricte, dupliquez les règles critiques dans robots.txt et envisagez des blocages serveur par User-Agent/IP.
