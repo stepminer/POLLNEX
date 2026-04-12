@@ -21,3 +21,11 @@
 2026-04-12 22:36:54,603 INFO     hai.agent — [rss] → 0 posts
 2026-04-12 22:36:54,603 INFO     hai.agent — Total raw posts collected: 0
 2026-04-12 22:36:54,603 WARNING  hai.agent — No posts collected — aborting run.
+2026-04-12 22:39:57,261 WARNING  haiti_anger_index.classifier.sentiment_classifier — transformers not installed — using keyword-based fallback classifier.
+2026-04-12 22:39:57,331 WARNING  haiti_anger_index.crawlers.reddit_crawler — praw not installed — Reddit crawler disabled.
+2026-04-12 22:39:57,348 WARNING  haiti_anger_index.crawlers.twitter_crawler — tweepy not installed — Twitter crawler disabled.
+2026-04-12 22:39:57,349 WARNING  haiti_anger_index.crawlers.youtube_crawler — google-api-python-client not installed — YouTube crawler disabled.
+2026-04-12 22:39:57,374 INFO     haiti_anger_index.storage.database — Database initialised at haiti_anger_index.db
+2026-04-12 22:39:57,503 INFO     haiti_anger_index.storage.database — Upserted 80 posts
+2026-04-12 22:39:58,068 INFO     haiti_anger_index.reporting.report_generator — Report written → reports/hai_report_20260412_223958.html
+2026-04-12 22:39:58,070 INFO     haiti_anger_index.storage.database — Report saved → reports/hai_report_20260412_223958.html
