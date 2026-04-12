@@ -1,0 +1,122 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# Haiti Anger Index (HAI™) — GitHub Actions Workflow
+# POLLNEX Insights
+#
+# HOW TO RUN FROM GITHUB:
+#   1. Go to the "Actions" tab in this repository
+#   2. Click "Haiti Anger Index Agent" in the left sidebar
+#   3. Click "Run workflow" (top right)
+#   4. Fill in the options and click the green "Run workflow" button
+#
+# The report is saved as a downloadable artifact after each run.
+# ──────────────────────────────────────────────────────────────────────────────
+
+name: Haiti Anger Index Agent
+
+on:
+  # ── Manual trigger from the GitHub Actions UI ──────────────────────────────
+  workflow_dispatch:
+    inputs:
+      platforms:
+        description: >
+          Platforms to crawl (comma-separated).
+          Options: twitter, facebook, youtube, reddit, rss
+          Use "rss" to run with NO API keys required.
+        required: false
+        default: "rss"
+        type: string
+      dry_run:
+        description: "Dry run — print results but do NOT save to database"
+        required: false
+        default: false
+        type: boolean
+      max_posts:
+        description: "Max posts per platform (default: 200)"
+        required: false
+        default: "200"
+        type: string
+
+  # ── Automatic daily run at 06:00 UTC ───────────────────────────────────────
+  schedule:
+    - cron: "0 6 * * *"
+
+jobs:
+  run-agent:
+    name: Run Haiti Anger Index
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # ── 1. Check out the repository ────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Set up Python ───────────────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      # ── 3. Install dependencies ────────────────────────────────────────────
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Install core dependencies (no PyTorch — uses keyword fallback classifier)
+          pip install feedparser langdetect jinja2 requests
+          # Install optional social-media libraries (won't fail if unused)
+          pip install tweepy praw google-api-python-client || true
+
+      # ── 4. Run the agent ───────────────────────────────────────────────────
+      - name: Run Haiti Anger Index Agent
+        env:
+          # Set your secrets in: Settings → Secrets → Actions → New repository secret
+          TWITTER_BEARER_TOKEN:    ${{ secrets.TWITTER_BEARER_TOKEN }}
+          TWITTER_API_KEY:         ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET:      ${{ secrets.TWITTER_API_SECRET }}
+          YOUTUBE_API_KEY:         ${{ secrets.YOUTUBE_API_KEY }}
+          REDDIT_CLIENT_ID:        ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET:    ${{ secrets.REDDIT_CLIENT_SECRET }}
+          FACEBOOK_ACCESS_TOKEN:   ${{ secrets.FACEBOOK_ACCESS_TOKEN }}
+          HAI_DB_PATH:             "hai_run.db"
+          HAI_REPORTS_DIR:         "reports"
+          MAX_POSTS_PER_PLATFORM:  ${{ github.event.inputs.max_posts || '200' }}
+        run: |
+          PLATFORMS="${{ github.event.inputs.platforms || 'rss' }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
+
+          ARGS="--platforms $PLATFORMS"
+          if [ "$DRY_RUN" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+
+          echo "▶ Running: python -m haiti_anger_index $ARGS"
+          python -m haiti_anger_index $ARGS
+
+      # ── 5. Upload the HTML report as a downloadable artifact ───────────────
+      - name: Upload HAI Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: haiti-anger-index-report-${{ github.run_number }}
+          path: |
+            reports/
+            hai_agent.log
+          if-no-files-found: warn
+          retention-days: 90
+
+      # ── 6. Print summary in the workflow log ───────────────────────────────
+      - name: Print log summary
+        if: always()
+        run: |
+          echo "──────────────────────────────────────────"
+          echo "  Haiti Anger Index — Run Complete"
+          echo "──────────────────────────────────────────"
+          if [ -f hai_agent.log ]; then
+            tail -30 hai_agent.log
+          fi
+          if [ -d reports ]; then
+            echo ""
+            echo "Report files:"
+            ls -lh reports/
+          fi
