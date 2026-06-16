@@ -3,97 +3,53 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Haiti Anger Index — POLLNEX Insights (Test)</title>
+<title>Haiti Anger Index — POLLNEX Insights</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  /* ── Design system from index.html ── */
   :root {
-    --navy:   #233144;
-    --blue:   #2196F3;
-    --green:  #66BB6A;
-    --gold:   #DAA520;
-    --ink:    #1A3643;
-    --bg:     #F5F7FA;
-    --card:   #FFFFFF;
-    --muted:  #6B7B8C;
-    --border: #D0D7DE;
-    --shadow: 0 10px 24px rgba(0,0,0,.08);
-    --radius: 14px;
-    --radius-sm: 10px;
-    --max:    1200px;
+    --primary: #002366;   /* POLLNEX navy */
+    --accent:  #D4AF37;   /* POLLNEX gold  */
+    --light:   #F5F7FA;
+    --text:    #1A1A2E;
+    --border:  #DDE3EC;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.6;
-  }
-  a { color: var(--blue); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--light); color: var(--text); }
 
-  /* ── Header (index.html sticky gradient) ── */
-  header.site-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: linear-gradient(90deg, var(--navy), #2b4462);
+  /* ── Header ── */
+  header {
+    background: var(--primary);
     color: #fff;
-    box-shadow: var(--shadow);
-  }
-  .nav {
+    padding: 24px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: .75rem 1rem;
   }
-  .brand { display: flex; align-items: center; gap: .75rem; }
-  .brand h1 {
-    font-size: 1.05rem;
-    margin: 0;
-    line-height: 1.1;
-    font-weight: 700;
-    letter-spacing: .2px;
-  }
-  .brand small { display: block; font-weight: 500; color: #cfe7ff; }
-  .report-meta { text-align: right; font-size: .8rem; color: #cfe7ff; }
-  .cta-btn {
-    background: var(--gold);
-    color: #222;
-    border-radius: 999px;
-    padding: .55rem .9rem;
-    font-weight: 800;
-    border: 2px solid transparent;
-    text-decoration: none;
-  }
-  .cta-btn:hover { filter: brightness(.95); text-decoration: none; }
+  header .logo { font-size: 28px; font-weight: 800; letter-spacing: 1px; }
+  header .logo span { color: var(--accent); }
+  header .report-meta { text-align: right; font-size: 13px; opacity: .85; }
 
   /* ── Layout ── */
-  .container { max-width: var(--max); margin: 0 auto; padding: 2rem 1rem; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
 
   /* ── Title ── */
   .report-title {
     text-align: center;
-    padding: 2rem 0 1rem;
+    padding: 32px 0 16px;
   }
-  .report-title h1 { font-size: 2.2rem; color: var(--navy); }
-  .report-title p  { font-size: 1rem; color: var(--muted); margin-top: 6px; }
+  .report-title h1 { font-size: 2.4rem; color: var(--primary); }
+  .report-title p  { font-size: 1rem; color: #555; margin-top: 6px; }
 
-  /* ── HAI Gauge section ── */
+  /* ── HAI Gauge ── */
   .gauge-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 2rem;
-    margin-bottom: 1.5rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    padding: 32px;
+    margin-bottom: 28px;
   }
   .gauge-score {
     font-size: 5rem;
@@ -109,115 +65,68 @@
     border-radius: 20px;
     color: #fff;
   }
-  .gauge-trend { margin-top: 10px; font-size: 1rem; color: var(--muted); }
-  .trend-up     { color: #F44336; }
-  .trend-down   { color: var(--green); }
-  .trend-stable { color: var(--muted); }
+  .gauge-trend { margin-top: 10px; font-size: 1rem; color: #555; }
+  .trend-up   { color: #F44336; }
+  .trend-down { color: #4CAF50; }
+  .trend-stable { color: #888; }
 
-  /* ── Two-column grid (index.html style) ── */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  /* ── Two-column grid ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+  @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 
-  /* ── Card (index.html style) ── */
+  /* ── Card ── */
   .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1rem;
-    box-shadow: var(--shadow);
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    padding: 24px;
   }
   .card h2 {
     font-size: 1.1rem;
-    color: var(--navy);
-    border-bottom: 2px solid var(--gold);
+    color: var(--primary);
+    border-bottom: 2px solid var(--accent);
     padding-bottom: 8px;
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
   }
 
   /* ── Stat row ── */
-  .stat-row {
-    display: flex;
-    gap: 1rem;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-  }
-  .stat-box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 1.25rem 1.75rem;
-    text-align: center;
-    flex: 1;
-    min-width: 120px;
-  }
-  .stat-box .value { font-size: 2rem; font-weight: 800; }
-  .stat-box .label { font-size: .85rem; color: var(--muted); margin-top: 4px; }
-  .stat-pos { color: var(--green); }
-  .stat-neg { color: #F44336; }
-  .stat-neu { color: #9E9E9E; }
+  .stat-row { display: flex; gap: 16px; justify-content: space-around; flex-wrap: wrap; margin-bottom: 28px; }
+  .stat-box { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,.08); padding:20px 28px; text-align:center; flex:1; min-width:120px; }
+  .stat-box .value { font-size:2rem; font-weight:800; }
+  .stat-box .label { font-size:.85rem; color:#666; margin-top:4px; }
+  .stat-pos { color:#4CAF50; }
+  .stat-neg { color:#F44336; }
+  .stat-neu { color:#9E9E9E; }
 
   /* ── Table ── */
-  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
-  th { background: var(--navy); color: #fff; padding: 10px 12px; text-align: left; }
-  td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
-  tr:hover td { background: #F0F4FF; }
-  .bar-wrap { background: #eee; border-radius: 4px; height: 10px; overflow: hidden; }
-  .bar-fill  { height: 10px; border-radius: 4px; }
+  table { width:100%; border-collapse:collapse; font-size:.9rem; }
+  th { background:var(--primary); color:#fff; padding:10px 12px; text-align:left; }
+  td { padding:9px 12px; border-bottom:1px solid var(--border); }
+  tr:hover td { background:#F0F4FF; }
+  .bar-wrap { background:#eee; border-radius:4px; height:10px; overflow:hidden; }
+  .bar-fill  { height:10px; border-radius:4px; }
 
-  /* ── Footer (index.html style) ── */
+  /* ── Footer ── */
   footer {
-    background: var(--navy);
-    color: #cfe7ff;
-    padding: 1rem;
+    background: var(--primary);
+    color: rgba(255,255,255,.7);
+    text-align: center;
+    padding: 20px;
+    font-size: .85rem;
+    margin-top: 40px;
   }
-  footer .inner {
-    max-width: var(--max);
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: .75rem;
-    align-items: center;
-    justify-content: space-between;
-  }
-  footer a { color: var(--gold); }
-
-  /* ── Test banner ── */
-  .test-banner {
-    background: #FFF8E1;
-    border: 1px solid var(--gold);
-    border-radius: var(--radius-sm);
-    padding: .75rem 1rem;
-    margin-bottom: 1.5rem;
-    font-size: .9rem;
-    color: var(--ink);
-  }
-  .test-banner strong { color: var(--navy); }
-
-  /* ── Responsive (index.html breakpoints) ── */
-  @media (max-width: 1000px) {
-    .grid-2 { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 640px) {
-    .nav .report-meta { display: none; }
-    .stat-row { gap: .75rem; }
-  }
+  footer a { color: var(--accent); text-decoration: none; }
 </style>
 </head>
 <body>
 
-<!-- Header (index.html sticky gradient style) -->
-<header class="site-header">
-  <nav class="nav" aria-label="Site navigation">
-    <div class="brand">
-      <h1>POLLNEX<br/><small>Haiti Anger Index™</small></h1>
-    </div>
-    <div class="report-meta">
-      April 12, 2026<br/>
-      Period: 2026-04-05 – 2026-04-12
-    </div>
-    <a href="https://pollnex.com" class="cta-btn">POLLNEX.com</a>
-  </nav>
+<header>
+  <div class="logo">POLL<span>NEX</span></div>
+  <div class="report-meta">
+    Haiti Anger Index™<br/>
+    <strong>June 16, 2026</strong><br/>
+    Period: 2026-06-09 – 2026-06-16
+  </div>
 </header>
 
 <div class="container">
@@ -231,24 +140,18 @@
     </p>
   </div>
 
-  <!-- Test notice -->
-  <div class="test-banner">
-    ⚠️ <strong>Test Report —  Sample Size.</strong>
-     
-    <strong>880 posts</strong>  .
-    All percentages, rates, and the HAI score (25.9) are rounded.
-  </div>
-
   <!-- Gauge -->
   <div class="gauge-section">
     <canvas id="gaugeChart" width="340" height="200"></canvas>
     <div class="gauge-score" style="color:#FFC107">25.9</div>
     <div class="gauge-label" style="background:#FFC107">Concerned</div>
     <div class="gauge-trend">
-      <span class="trend-stable">→ Stable vs previous period</span>
+      
+        <span class="trend-stable">→ Stable vs previous period</span>
+      
     </div>
-    <p style="font-size:.85rem;color:var(--muted);margin-top:12px;">
-      Based on <strong>880</strong> posts analysed |
+    <p style="font-size:.85rem;color:#777;margin-top:12px;">
+      Based on <strong>80</strong> posts analysed |
       <strong>30.0%</strong> negative |
       <strong>2.5%</strong> positive |
       <strong>67.5%</strong> neutral
@@ -257,10 +160,10 @@
 
   <!-- Stat row -->
   <div class="stat-row">
-    <div class="stat-box"><div class="value">880</div><div class="label">Total Posts</div></div>
-    <div class="stat-box"><div class="value stat-neg">264</div><div class="label">Negative</div></div>
-    <div class="stat-box"><div class="value stat-pos">22</div><div class="label">Positive</div></div>
-    <div class="stat-box"><div class="value stat-neu">594</div><div class="label">Neutral</div></div>
+    <div class="stat-box"><div class="value">80</div><div class="label">Total Posts</div></div>
+    <div class="stat-box"><div class="value stat-neg">24</div><div class="label">Negative</div></div>
+    <div class="stat-box"><div class="value stat-pos">2</div><div class="label">Positive</div></div>
+    <div class="stat-box"><div class="value stat-neu">54</div><div class="label">Neutral</div></div>
     <div class="stat-box"><div class="value" style="color:#FFC107">25.9/100</div><div class="label">HAI Score</div></div>
   </div>
 
@@ -273,6 +176,7 @@
       <table>
         <thead><tr><th>Topic</th><th>Neg. Rate</th><th>Anger Score</th></tr></thead>
         <tbody>
+        
           <tr>
             <td>Public Safety &amp; Crime</td>
             <td>56.5%</td>
@@ -283,6 +187,7 @@
               79.1
             </td>
           </tr>
+        
           <tr>
             <td>Education</td>
             <td>60.0%</td>
@@ -293,6 +198,7 @@
               54.0
             </td>
           </tr>
+        
           <tr>
             <td>Health &amp; Healthcare</td>
             <td>42.9%</td>
@@ -303,6 +209,7 @@
               47.1
             </td>
           </tr>
+        
           <tr>
             <td>Government &amp; Corruption</td>
             <td>26.7%</td>
@@ -313,6 +220,7 @@
               40.0
             </td>
           </tr>
+        
           <tr>
             <td>Natural Disasters</td>
             <td>33.3%</td>
@@ -323,6 +231,7 @@
               40.0
             </td>
           </tr>
+        
         </tbody>
       </table>
     </div>
@@ -350,76 +259,95 @@
       <table>
         <thead><tr><th>Topic</th><th>Posts</th><th>Neg%</th><th>Weighted</th></tr></thead>
         <tbody>
+        
           <tr>
             <td>Government &amp; Corruption</td>
-            <td>165</td>
+            <td>15</td>
             <td>26.7%</td>
             <td>40.0</td>
           </tr>
+        
           <tr>
             <td>International Relations</td>
-            <td>132</td>
+            <td>12</td>
             <td>25.0%</td>
             <td>22.5</td>
           </tr>
+        
           <tr>
             <td>Human Rights &amp; Diaspora</td>
-            <td>121</td>
+            <td>11</td>
             <td>18.2%</td>
             <td>23.6</td>
           </tr>
+        
           <tr>
             <td>Public Safety &amp; Crime</td>
-            <td>253</td>
+            <td>23</td>
             <td>56.5%</td>
             <td>79.1</td>
           </tr>
+        
           <tr>
             <td>Economy &amp; Poverty</td>
-            <td>132</td>
+            <td>12</td>
             <td>25.0%</td>
             <td>32.5</td>
           </tr>
+        
           <tr>
             <td>Infrastructure</td>
-            <td>99</td>
+            <td>9</td>
             <td>0.0%</td>
             <td>0.0</td>
           </tr>
+        
           <tr>
             <td>Health &amp; Healthcare</td>
-            <td>77</td>
+            <td>7</td>
             <td>42.9%</td>
             <td>47.1</td>
           </tr>
+        
           <tr>
             <td>General</td>
-            <td>121</td>
+            <td>11</td>
             <td>9.1%</td>
             <td>9.1</td>
           </tr>
+        
           <tr>
             <td>Natural Disasters</td>
-            <td>33</td>
+            <td>3</td>
             <td>33.3%</td>
             <td>40.0</td>
           </tr>
+        
           <tr>
             <td>Education</td>
-            <td>55</td>
+            <td>5</td>
             <td>60.0%</td>
             <td>54.0</td>
           </tr>
+        
         </tbody>
       </table>
     </div>
 
   </div>
 
+  <!-- Historical Trend -->
+  
+  <div class="card" style="margin-bottom:28px;">
+    <h2>📈 Historical HAI Trend</h2>
+    <canvas id="trendChart" height="120"></canvas>
+  </div>
+  
+
   <!-- Methodology note -->
-  <div class="card" style="margin-bottom:1.5rem;">
+  <div class="card" style="margin-bottom:28px;">
     <h2>ℹ️ Methodology</h2>
-    <p style="font-size:.9rem;line-height:1.6;color:var(--ink);">
+    <p style="font-size:.9rem;line-height:1.6;color:#444;">
       The <strong>Haiti Anger Index (HAI™)</strong> is computed by POLLNEX Insights as a composite of three weighted components:
       (1) raw negative-sentiment rate (40%), (2) engagement-weighted negative rate (40%), and (3) a topic-severity
       adjustment that amplifies issues such as kidnapping, corruption, and economic collapse (20%).
@@ -433,10 +361,8 @@
 </div>
 
 <footer>
-  <div class="inner">
-    <p>© 2026 <a href="https://pollnex.com">POLLNEX Insights</a> — Haiti Anger Index™ is a proprietary research product. All rights reserved. Not for redistribution without attribution.</p>
-    <p style="font-size:.85rem;color:#a9d3ff">Test report:  sample size (880 posts).</p>
-  </div>
+  © 2026 <a href="https://pollnex.com">POLLNEX Insights</a> — Haiti Anger Index™ is a proprietary research product.
+  All rights reserved.  Not for redistribution without attribution.
 </footer>
 
 <!-- Charts -->
@@ -462,12 +388,12 @@ new Chart(gaugeCtx, {
   }
 });
 
-// ── Platform bar chart (11× scaled counts) ───────────────────────────────────
+// ── Platform bar chart ────────────────────────────────────────────────────────
 const platCtx = document.getElementById('platformChart').getContext('2d');
-const platLabels = ["news_rss"];
-const platNeg    = [264];
-const platPos    = [22];
-const platNeu    = [594];
+const platLabels = [&#34;news_rss&#34;];
+const platNeg    = [24];
+const platPos    = [2];
+const platNeu    = [54];
 new Chart(platCtx, {
   type: 'bar',
   data: {
@@ -485,21 +411,48 @@ new Chart(platCtx, {
   }
 });
 
-// ── Language doughnut (11× scaled negative counts) ───────────────────────────
+// ── Language doughnut ─────────────────────────────────────────────────────────
 const langCtx = document.getElementById('languageChart').getContext('2d');
-const langLabels = ["English", "French", "Creole", "it"];
-const langNeg    = [143, 44, 77, 0];
+const langLabels = [&#34;English&#34;, &#34;French&#34;, &#34;Creole&#34;, &#34;it&#34;];
+const langNeg    = [13, 4, 7, 0];
 new Chart(langCtx, {
   type: 'doughnut',
   data: {
     labels: langLabels,
-    datasets: [{ data: langNeg, backgroundColor: ['#233144','#DAA520','#E53935','#78909C'] }]
+    datasets: [{ data: langNeg, backgroundColor: ['#002366','#D4AF37','#E53935','#78909C'] }]
   },
   options: {
     responsive: true,
     plugins: { legend: { position: 'bottom' } }
   }
 });
+
+
+// ── Trend line ────────────────────────────────────────────────────────────────
+const trendCtx = document.getElementById('trendChart').getContext('2d');
+const trendLabels = [&#34;Apr 12&#34;, &#34;Jun 16&#34;, &#34;Jun 16&#34;];
+const trendScores = [25.9, 25.9, 25.9];
+new Chart(trendCtx, {
+  type: 'line',
+  data: {
+    labels: trendLabels,
+    datasets: [{
+      label: 'HAI Score',
+      data: trendScores,
+      borderColor: '#002366',
+      backgroundColor: 'rgba(0,35,102,.1)',
+      tension: 0.3,
+      fill: true,
+      pointBackgroundColor: '#D4AF37',
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: { y: { min: 0, max: 100 } },
+    plugins: { legend: { display: false } }
+  }
+});
+
 </script>
 </body>
 </html>
