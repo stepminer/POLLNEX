@@ -40,3 +40,10 @@
 2026-06-16 08:46:55,486 INFO     hai.agent — [rss] → 0 posts
 2026-06-16 08:46:55,486 INFO     hai.agent — Total raw posts collected: 0
 2026-06-16 08:46:55,486 WARNING  hai.agent — No posts collected — aborting run.
+2026-06-16 08:53:19,217 INFO     haiti_anger_index.storage.database — Database initialised at haiti_anger_index.db
+2026-06-16 08:53:19,218 INFO     hai.agent — Loaded 80 classified posts from DB
+2026-06-16 08:53:19,218 INFO     hai.agent — Stats → total=80 neg=24 pos=2 neu=54 neg_rate=0.300
+2026-06-16 08:53:19,219 INFO     hai.agent — HAI Score: 25.9 / 100  [Concerned]  trend=stable
+2026-06-16 08:53:19,231 INFO     haiti_anger_index.reporting.report_generator — Report written → reports/hai_report_20260616_085319.html
+2026-06-16 08:53:19,232 INFO     haiti_anger_index.storage.database — Report saved → reports/hai_report_20260616_085319.html
+2026-06-16 08:53:19,232 INFO     hai.agent — Report written → reports/hai_report_20260616_085319.html
