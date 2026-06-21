@@ -1,5 +1,8 @@
 name: Haiti Anger Index Agent
 
+env:
+  DEFAULT_HAI_DB_PATH: "haiti_anger_index.db"
+
 on:
   workflow_dispatch:
     inputs:
@@ -22,12 +25,12 @@ on:
         default: "200"
         type: string
       db_path:
-        description: "SQLite database path (default: hai_run.db)"
+        description: "SQLite database path (optional override)"
         required: false
-        default: "hai_run.db"
         type: string
 
   schedule:
+    # Daily at 06:00 UTC
     - cron: "0 6 * * *"
 
 jobs:
@@ -51,13 +54,12 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # Core parsing and text analytics packages
-          pip install feedparser==6.0.11 langdetect==1.0.9 jinja2==3.1.6 requests==2.32.5
+          pip install -r requirements-hai-agent.txt
 
       - name: Run Haiti Anger Index Agent
         env:
           SOCIAVAULT_API_KEY: ${{ secrets.SOCIAVAULT_API_KEY }}
-          HAI_DB_PATH: ${{ github.event.inputs.db_path || 'hai_run.db' }}
+          HAI_DB_PATH: ${{ github.event.inputs.db_path || env.DEFAULT_HAI_DB_PATH }}
           HAI_REPORTS_DIR: "reports"
           MAX_POSTS_PER_PLATFORM: ${{ github.event.inputs.max_posts || '200' }}
         run: |
