@@ -114,6 +114,7 @@
         <a href="#impact">Impact</a>
         <a href="#team">Équipe</a>
         <a href="#faq">FAQ</a>
+        <a href="#social-intelligence">Social Intelligence</a>
         <a href="#contact" class="cta-btn">Contact</a>
       </div>
     </nav>
@@ -334,6 +335,24 @@
     </section>
   </main>
 
+  <!-- ===== SOCIAVAULT SOCIAL INTELLIGENCE (TEST) ===== -->
+  <section id="social-intelligence" style="background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+    <div class="container section">
+      <h3 style="color:var(--navy)">Intelligence sociale — Powered by SociaVault <span style="font-size:.75rem;font-weight:500;color:var(--muted);vertical-align:middle">(test)</span></h3>
+      <p style="color:var(--muted);margin-bottom:1.5rem">Tendances et sentiments en temps réel sur les conversations qui façonnent l'économie haïtienne et la diaspora, via l'API SociaVault.</p>
+      <div id="sv-dashboard" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem" aria-live="polite" aria-label="Tableau de bord SociaVault">
+        <div class="card" style="grid-column:1/-1;text-align:center;color:var(--muted);padding:2rem" id="sv-loading">
+          <span aria-label="Chargement…">⏳ Chargement des données SociaVault…</span>
+        </div>
+      </div>
+      <p style="margin-top:1rem;font-size:.8rem;color:var(--muted)">
+        Source&nbsp;: <a href="https://sociavault.com" target="_blank" rel="noopener noreferrer">SociaVault API v1</a> ·
+        Région&nbsp;: Haïti (HT) · Langue&nbsp;: Français
+      </p>
+    </div>
+  </section>
+  <!-- ===== END SOCIAVAULT ===== -->
+
   <!-- Contact -->
   <section id="contact" class="contact">
     <div class="container section">
@@ -433,6 +452,91 @@
         panel.style.display = expanded ? 'none' : 'block';
       });
     });
+  </script>
+
+  <script type="module">
+    /**
+     * SociaVault Social Intelligence widget
+     * Tries the real API first; falls back to mock data for demo / testing.
+     *
+     * To switch to live data:
+     *   1. Set SOCIAVAULT_API_KEY to your real key.
+     *   2. Ensure your deployment can reach https://api.sociavault.com
+     */
+    import SociaVaultClient from './sociavault-api.js';
+
+    const SOCIAVAULT_API_KEY = 'REPLACE_WITH_YOUR_SOCIAVAULT_KEY';
+
+    // ── Mock data used when the API is unreachable (dev / demo mode) ─────────
+    const MOCK_REPORT = {
+      generatedAt: new Date().toISOString(),
+      region: 'HT',
+      language: 'fr',
+      insights: [
+        { topic: 'Commerce électronique Haiti', volume: 4820, volumeDelta: 12.4,
+          sentiment: { positive: 0.62, neutral: 0.25, negative: 0.13, sampleSize: 1204 } },
+        { topic: 'Diaspora haïtienne', volume: 3950, volumeDelta: 8.1,
+          sentiment: { positive: 0.58, neutral: 0.28, negative: 0.14, sampleSize: 987 } },
+        { topic: 'Marché local Port-au-Prince', volume: 3100, volumeDelta: -2.3,
+          sentiment: { positive: 0.45, neutral: 0.33, negative: 0.22, sampleSize: 775 } },
+        { topic: 'Transferts d\'argent', volume: 2750, volumeDelta: 5.7,
+          sentiment: { positive: 0.70, neutral: 0.20, negative: 0.10, sampleSize: 688 } },
+        { topic: 'Agriculture & sécurité alimentaire', volume: 2100, volumeDelta: 18.9,
+          sentiment: { positive: 0.41, neutral: 0.35, negative: 0.24, sampleSize: 525 } },
+      ],
+    };
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    function sentimentLabel(s) {
+      if (!s) return '—';
+      if (s.positive >= 0.55) return '😊 Positif';
+      if (s.negative >= 0.30) return '😟 Négatif';
+      return '😐 Neutre';
+    }
+
+    function deltaLabel(d) {
+      const sign = d >= 0 ? '▲' : '▼';
+      const color = d >= 0 ? '#2e7d32' : '#c62828';
+      return `<span style="color:${color};font-weight:700">${sign} ${Math.abs(d).toFixed(1)}%</span>`;
+    }
+
+    function renderDashboard(report) {
+      const dash = document.getElementById('sv-dashboard');
+      const tag = report._mock
+        ? '<span style="background:#fff3e0;color:#e65100;border-radius:999px;padding:.2rem .6rem;font-size:.75rem;font-weight:700">Données de démonstration</span>'
+        : '<span style="background:#e8f5e9;color:#2e7d32;border-radius:999px;padding:.2rem .6rem;font-size:.75rem;font-weight:700">Données live</span>';
+
+      dash.innerHTML = `
+        <div class="card" style="grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+          <div>
+            <strong>Rapport de tendances SociaVault</strong>
+            <span style="color:var(--muted);font-size:.85rem;margin-left:.5rem">Haïti · ${new Date(report.generatedAt).toLocaleString('fr-FR')}</span>
+          </div>
+          ${tag}
+        </div>
+        ${report.insights.map(item => `
+          <article class="card">
+            <h4 style="margin:0 0 .5rem;font-size:.95rem;color:var(--navy)">${item.topic}</h4>
+            <p style="margin:.25rem 0;font-size:1.1rem;font-weight:700;color:var(--ink)">${item.volume.toLocaleString('fr-FR')} mentions</p>
+            <p style="margin:.1rem 0;font-size:.85rem">${deltaLabel(item.volumeDelta)} vs période préc.</p>
+            <p style="margin:.4rem 0 0;font-size:.85rem;color:var(--muted)">Sentiment : <strong style="color:var(--ink)">${sentimentLabel(item.sentiment)}</strong></p>
+            ${item.sentiment ? `<p style="margin:.1rem 0;font-size:.78rem;color:var(--muted)">n = ${item.sentiment.sampleSize.toLocaleString('fr-FR')}</p>` : ''}
+          </article>
+        `).join('')}
+      `;
+    }
+
+    // ── Bootstrap ─────────────────────────────────────────────────────────────
+    (async () => {
+      try {
+        const client = new SociaVaultClient({ apiKey: SOCIAVAULT_API_KEY });
+        const report = await client.runSocialInsightsWorkflow({ region: 'HT', language: 'fr', topN: 5 });
+        renderDashboard(report);
+      } catch (_err) {
+        // API unreachable or key not set — render mock data with a clear label
+        renderDashboard({ ...MOCK_REPORT, _mock: true });
+      }
+    })();
   </script>
 
   <div aria-hidden="true" style="height:32px"></div>
