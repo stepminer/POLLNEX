@@ -466,6 +466,10 @@
     import SociaVaultClient from './sociavault-api.js';
 
     const SOCIAVAULT_API_KEY = 'REPLACE_WITH_YOUR_SOCIAVAULT_KEY';
+    // ⚠️  SECURITY NOTE: Do NOT place a real SociaVault API key here.
+    // Client-side JavaScript is visible to all users. For production, proxy
+    // API requests through a serverless function or backend that holds the key
+    // server-side (e.g. a Netlify / Vercel edge function).
 
     // ── Mock data used when the API is unreachable (dev / demo mode) ─────────
     const MOCK_REPORT = {
@@ -532,8 +536,9 @@
         const client = new SociaVaultClient({ apiKey: SOCIAVAULT_API_KEY });
         const report = await client.runSocialInsightsWorkflow({ region: 'HT', language: 'fr', topN: 5 });
         renderDashboard(report);
-      } catch (_err) {
-        // API unreachable or key not set — render mock data with a clear label
+      } catch (err) {
+        // API unreachable or key not set — log for diagnostics and render mock data with a clear label
+        console.warn('SociaVault API error (falling back to demo data):', err);
         renderDashboard({ ...MOCK_REPORT, _mock: true });
       }
     })();
