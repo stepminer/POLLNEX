@@ -2,6 +2,7 @@ name: Haiti Anger Index Agent
 
 env:
   DEFAULT_HAI_DB_PATH: "haiti_anger_index.db"
+  HAI_LOG_FILE: "hai_agent.log"
 
 on:
   workflow_dispatch:
@@ -81,7 +82,7 @@ jobs:
           name: haiti-anger-index-report-${{ github.run_number }}
           path: |
             reports/
-            hai_agent.log
+            ${{ env.HAI_LOG_FILE }}
           if-no-files-found: warn
           retention-days: 90
 
@@ -91,8 +92,8 @@ jobs:
           echo "──────────────────────────────────────────"
           echo "  Haiti Anger Index — Run Complete"
           echo "──────────────────────────────────────────"
-          if [ -f hai_agent.log ]; then
-            tail -30 hai_agent.log
+          if [ -f "$HAI_LOG_FILE" ]; then
+            tail -30 "$HAI_LOG_FILE"
           fi
           if [ -d reports ]; then
             echo ""
