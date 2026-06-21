@@ -1,0 +1,92 @@
+name: Haiti Anger Index Agent
+
+on:
+  workflow_dispatch:
+    inputs:
+      platforms:
+        description: >
+          Platforms to crawl via SociaVault (comma-separated).
+          Options: tiktok, instagram, youtube, rss
+          Use "rss" to run with NO API keys required.
+        required: false
+        default: "tiktok,youtube"
+        type: string
+      dry_run:
+        description: "Dry run — print results but do NOT save to database"
+        required: false
+        default: false
+        type: boolean
+      max_posts:
+        description: "Max posts per platform (default: 200)"
+        required: false
+        default: "200"
+        type: string
+
+  schedule:
+    - cron: "0 6 * * *"
+
+jobs:
+  run-agent:
+    name: Run Haiti Anger Index via SociaVault
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Core parsing and text analytics packages
+          pip install feedparser langdetect jinja2 requests
+
+      - name: Run Haiti Anger Index Agent
+        env:
+          SOCIAVAULT_API_KEY: ${{ secrets.SOCIAVAULT_API_KEY }}
+          HAI_DB_PATH: "hai_run.db"
+          HAI_REPORTS_DIR: "reports"
+          MAX_POSTS_PER_PLATFORM: ${{ github.event.inputs.max_posts || '200' }}
+        run: |
+          PLATFORMS="${{ github.event.inputs.platforms || 'tiktok,youtube' }}"
+          DRY_RUN="${{ github.event.inputs.dry_run || 'false' }}"
+
+          ARGS="--platforms $PLATFORMS"
+          if [ "$DRY_RUN" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+
+          echo "▶ Running: python -m haiti_anger_index $ARGS"
+          python -m haiti_anger_index $ARGS
+
+      - name: Upload HAI Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: haiti-anger-index-report-${{ github.run_number }}
+          path: |
+            reports/
+            hai_agent.log
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Print log summary
+        if: always()
+        run: |
+          echo "──────────────────────────────────────────"
+          echo "  Haiti Anger Index — Run Complete"
+          echo "──────────────────────────────────────────"
+          if [ -f hai_agent.log ]; then
+            tail -30 hai_agent.log
+          fi
+          if [ -d reports ]; then
+            echo ""
+            echo "Report files:"
+            ls -lh reports/
+          fi
