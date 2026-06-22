@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Haiti Anger Index — POLLNEX Insights</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --primary: #002366;   /* POLLNEX navy */
+    --accent:  #D4AF37;   /* POLLNEX gold  */
+    --light:   #F5F7FA;
+    --text:    #1A1A2E;
+    --border:  #DDE3EC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--light); color: var(--text); }
+
+  /* ── Header ── */
+  header {
+    background: var(--primary);
+    color: #fff;
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header .logo { font-size: 28px; font-weight: 800; letter-spacing: 1px; }
+  header .logo span { color: var(--accent); }
+  header .report-meta { text-align: right; font-size: 13px; opacity: .85; }
+
+  /* ── Layout ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+  /* ── Title ── */
+  .report-title {
+    text-align: center;
+    padding: 32px 0 16px;
+  }
+  .report-title h1 { font-size: 2.4rem; color: var(--primary); }
+  .report-title p  { font-size: 1rem; color: #555; margin-top: 6px; }
+
+  /* ── HAI Gauge ── */
+  .gauge-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    padding: 32px;
+    margin-bottom: 28px;
+  }
+  .gauge-score {
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-top: 12px;
+  }
+  .gauge-label {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 6px;
+    padding: 4px 20px;
+    border-radius: 20px;
+    color: #fff;
+  }
+  .gauge-trend { margin-top: 10px; font-size: 1rem; color: #555; }
+  .trend-up   { color: #F44336; }
+  .trend-down { color: #4CAF50; }
+  .trend-stable { color: #888; }
+
+  /* ── Two-column grid ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+  @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ── Card ── */
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+    padding: 24px;
+  }
+  .card h2 {
+    font-size: 1.1rem;
+    color: var(--primary);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+
+  /* ── Stat row ── */
+  .stat-row { display: flex; gap: 16px; justify-content: space-around; flex-wrap: wrap; margin-bottom: 28px; }
+  .stat-box { background:#fff; border-radius:12px; box-shadow:0 2px 12px rgba(0,0,0,.08); padding:20px 28px; text-align:center; flex:1; min-width:120px; }
+  .stat-box .value { font-size:2rem; font-weight:800; }
+  .stat-box .label { font-size:.85rem; color:#666; margin-top:4px; }
+  .stat-pos { color:#4CAF50; }
+  .stat-neg { color:#F44336; }
+  .stat-neu { color:#9E9E9E; }
+
+  /* ── Table ── */
+  table { width:100%; border-collapse:collapse; font-size:.9rem; }
+  th { background:var(--primary); color:#fff; padding:10px 12px; text-align:left; }
+  td { padding:9px 12px; border-bottom:1px solid var(--border); }
+  tr:hover td { background:#F0F4FF; }
+  .bar-wrap { background:#eee; border-radius:4px; height:10px; overflow:hidden; }
+  .bar-fill  { height:10px; border-radius:4px; }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--primary);
+    color: rgba(255,255,255,.7);
+    text-align: center;
+    padding: 20px;
+    font-size: .85rem;
+    margin-top: 40px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">POLL<span>NEX</span></div>
+  <div class="report-meta">
+    Haiti Anger Index™<br/>
+    <strong>June 22, 2026</strong><br/>
+    Period: 2026-06-15 – 2026-06-22
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Title -->
+  <div class="report-title">
+    <h1>🇭🇹 Haiti Anger Index (HAI™)</h1>
+    <p>
+      A real-time composite measure of public sentiment across Haitian social media platforms
+      in English, French, and Haitian Creole. Powered by <strong>POLLNEX Insights</strong>.
+    </p>
+  </div>
+
+  <!-- Gauge -->
+  <div class="gauge-section">
+    <canvas id="gaugeChart" width="340" height="200"></canvas>
+    <div class="gauge-score" style="color:#FF9800">62.8</div>
+    <div class="gauge-label" style="background:#FF9800">Agitated</div>
+    <div class="gauge-trend">
+      
+        <span class="trend-up">▲ +4.4 pts vs previous period</span>
+      
+    </div>
+    <p style="font-size:.85rem;color:#777;margin-top:12px;">
+      Based on <strong>487</strong> posts analysed |
+      <strong>61.2%</strong> negative |
+      <strong>12.7%</strong> positive |
+      <strong>26.1%</strong> neutral
+    </p>
+  </div>
+
+  <!-- Stat row -->
+  <div class="stat-row">
+    <div class="stat-box"><div class="value">487</div><div class="label">Total Posts</div></div>
+    <div class="stat-box"><div class="value stat-neg">298</div><div class="label">Negative</div></div>
+    <div class="stat-box"><div class="value stat-pos">62</div><div class="label">Positive</div></div>
+    <div class="stat-box"><div class="value stat-neu">127</div><div class="label">Neutral</div></div>
+    <div class="stat-box"><div class="value" style="color:#FF9800">62.8/100</div><div class="label">HAI Score</div></div>
+  </div>
+
+  <!-- Top Drivers + Platform Breakdown -->
+  <div class="grid-2">
+
+    <!-- Top Drivers -->
+    <div class="card">
+      <h2>🔥 Top Anger Drivers</h2>
+      <table>
+        <thead><tr><th>Topic</th><th>Neg. Rate</th><th>Anger Score</th></tr></thead>
+        <tbody>
+        
+          <tr>
+            <td>Government &amp; Corruption</td>
+            <td>75.3%</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar-fill" style="width:112.9%;background:#F44336;"></div>
+              </div>
+              112.9
+            </td>
+          </tr>
+        
+          <tr>
+            <td>Public Safety &amp; Crime</td>
+            <td>80.4%</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar-fill" style="width:112.6%;background:#F44336;"></div>
+              </div>
+              112.6
+            </td>
+          </tr>
+        
+          <tr>
+            <td>Economy &amp; Poverty</td>
+            <td>67.1%</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar-fill" style="width:87.2%;background:#F44336;"></div>
+              </div>
+              87.2
+            </td>
+          </tr>
+        
+          <tr>
+            <td>Human Rights &amp; Diaspora</td>
+            <td>59.3%</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar-fill" style="width:77.1%;background:#F44336;"></div>
+              </div>
+              77.1
+            </td>
+          </tr>
+        
+          <tr>
+            <td>Health &amp; Healthcare</td>
+            <td>24.2%</td>
+            <td>
+              <div class="bar-wrap">
+                <div class="bar-fill" style="width:26.6%;background:#F44336;"></div>
+              </div>
+              26.6
+            </td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Platform Breakdown -->
+    <div class="card">
+      <h2>📱 Platform Breakdown</h2>
+      <canvas id="platformChart" height="220"></canvas>
+    </div>
+
+  </div>
+
+  <!-- Language Breakdown + Topic Detail -->
+  <div class="grid-2">
+
+    <!-- Language Breakdown -->
+    <div class="card">
+      <h2>🗣️ Language Breakdown</h2>
+      <canvas id="languageChart" height="220"></canvas>
+    </div>
+
+    <!-- Topic Detail Table -->
+    <div class="card">
+      <h2>📊 Topic Detail</h2>
+      <table>
+        <thead><tr><th>Topic</th><th>Posts</th><th>Neg%</th><th>Weighted</th></tr></thead>
+        <tbody>
+        
+          <tr>
+            <td>Public Safety &amp; Crime</td>
+            <td>148</td>
+            <td>80.4%</td>
+            <td>112.6</td>
+          </tr>
+        
+          <tr>
+            <td>Government &amp; Corruption</td>
+            <td>97</td>
+            <td>75.3%</td>
+            <td>112.9</td>
+          </tr>
+        
+          <tr>
+            <td>Economy &amp; Poverty</td>
+            <td>82</td>
+            <td>67.1%</td>
+            <td>87.2</td>
+          </tr>
+        
+          <tr>
+            <td>Human Rights &amp; Diaspora</td>
+            <td>54</td>
+            <td>59.3%</td>
+            <td>77.1</td>
+          </tr>
+        
+          <tr>
+            <td>International Relations</td>
+            <td>49</td>
+            <td>22.4%</td>
+            <td>20.2</td>
+          </tr>
+        
+          <tr>
+            <td>Health &amp; Healthcare</td>
+            <td>33</td>
+            <td>24.2%</td>
+            <td>26.6</td>
+          </tr>
+        
+          <tr>
+            <td>Natural Disasters</td>
+            <td>24</td>
+            <td>0.0%</td>
+            <td>0.0</td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Historical Trend -->
+  
+  <div class="card" style="margin-bottom:28px;">
+    <h2>📈 Historical HAI Trend</h2>
+    <canvas id="trendChart" height="120"></canvas>
+  </div>
+  
+
+  <!-- Methodology note -->
+  <div class="card" style="margin-bottom:28px;">
+    <h2>ℹ️ Methodology</h2>
+    <p style="font-size:.9rem;line-height:1.6;color:#444;">
+      The <strong>Haiti Anger Index (HAI™)</strong> is computed by POLLNEX Insights as a composite of three weighted components:
+      (1) raw negative-sentiment rate (40%), (2) engagement-weighted negative rate (40%), and (3) a topic-severity
+      adjustment that amplifies issues such as kidnapping, corruption, and economic collapse (20%).
+      Sentiment is classified using a multilingual XLM-RoBERTa model trained on social-media data and validated
+      for English, French, and Haitian Creole.  The index is scaled 0–100 where 0–25 = Calm, 26–50 = Concerned,
+      51–75 = Agitated, 76–100 = Enraged.  Data is sourced from Twitter/X, Facebook, YouTube, Reddit, and
+      major Haitian news RSS feeds.
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 <a href="https://pollnex.com">POLLNEX Insights</a> — Haiti Anger Index™ is a proprietary research product.
+  All rights reserved.  Not for redistribution without attribution.
+</footer>
+
+<!-- Charts -->
+<script>
+// ── Gauge (doughnut) ──────────────────────────────────────────────────────────
+const gaugeCtx = document.getElementById('gaugeChart').getContext('2d');
+const score = 62.8;
+new Chart(gaugeCtx, {
+  type: 'doughnut',
+  data: {
+    datasets: [{
+      data: [score, 100 - score],
+      backgroundColor: ['#FF9800', '#e0e0e0'],
+      borderWidth: 0,
+      circumference: 180,
+      rotation: 270,
+    }]
+  },
+  options: {
+    responsive: false,
+    cutout: '70%',
+    plugins: { legend: { display: false }, tooltip: { enabled: false } }
+  }
+});
+
+// ── Platform bar chart ────────────────────────────────────────────────────────
+const platCtx = document.getElementById('platformChart').getContext('2d');
+const platLabels = [&#34;news_rss&#34;, &#34;tiktok&#34;, &#34;youtube&#34;];
+const platNeg    = [131, 97, 70];
+const platPos    = [28, 20, 14];
+const platNeu    = [53, 36, 38];
+new Chart(platCtx, {
+  type: 'bar',
+  data: {
+    labels: platLabels,
+    datasets: [
+      { label: 'Negative', data: platNeg, backgroundColor: '#F44336' },
+      { label: 'Positive', data: platPos, backgroundColor: '#4CAF50' },
+      { label: 'Neutral',  data: platNeu, backgroundColor: '#9E9E9E' },
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position: 'bottom' } },
+    scales: { x: { stacked: true }, y: { stacked: true } }
+  }
+});
+
+// ── Language doughnut ─────────────────────────────────────────────────────────
+const langCtx = document.getElementById('languageChart').getContext('2d');
+const langLabels = [&#34;French&#34;, &#34;Creole&#34;, &#34;English&#34;, &#34;Unknown&#34;];
+const langNeg    = [121, 106, 56, 15];
+new Chart(langCtx, {
+  type: 'doughnut',
+  data: {
+    labels: langLabels,
+    datasets: [{ data: langNeg, backgroundColor: ['#002366','#D4AF37','#E53935','#78909C'] }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { position: 'bottom' } }
+  }
+});
+
+
+// ── Trend line ────────────────────────────────────────────────────────────────
+const trendCtx = document.getElementById('trendChart').getContext('2d');
+const trendLabels = [&#34;Jun 15&#34;, &#34;Jun 08&#34;, &#34;Jun 01&#34;, &#34;May 25&#34;, &#34;Jun 22&#34;];
+const trendScores = [63.5, 62.1, 60.7, 58.4, 62.8];
+new Chart(trendCtx, {
+  type: 'line',
+  data: {
+    labels: trendLabels,
+    datasets: [{
+      label: 'HAI Score',
+      data: trendScores,
+      borderColor: '#002366',
+      backgroundColor: 'rgba(0,35,102,.1)',
+      tension: 0.3,
+      fill: true,
+      pointBackgroundColor: '#D4AF37',
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: { y: { min: 0, max: 100 } },
+    plugins: { legend: { display: false } }
+  }
+});
+
+</script>
+</body>
+</html>
