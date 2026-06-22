@@ -24,6 +24,6 @@ jobs:
 
       - name: Verify key production assets
         run: |
-          test -f index.html || { echo "Missing required file: index.html"; exit 1; }
-          test -f robots.txt || { echo "Missing required file: robots.txt"; exit 1; }
-          test -f sitemap.xml || { echo "Missing required file: sitemap.xml"; exit 1; }
+          test -f index.html || { echo "Production check failed: missing /index.html at repository root."; exit 1; }
+          test -f robots.txt || { echo "Production check failed: missing /robots.txt at repository root."; exit 1; }
+          test -f sitemap.xml || { echo "Production check failed: missing /sitemap.xml at repository root."; exit 1; }
