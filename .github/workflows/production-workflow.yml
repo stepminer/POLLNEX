@@ -1,0 +1,29 @@
+name: Production Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-workflow
+  cancel-in-progress: true
+
+jobs:
+  production-check:
+    name: Run production workflow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify key production assets
+        run: |
+          test -f index.html
+          test -f robots.txt
+          test -f sitemap.xml
