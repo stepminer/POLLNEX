@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: production-workflow
+  group: production-workflow-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -24,6 +24,6 @@ jobs:
 
       - name: Verify key production assets
         run: |
-          test -f index.html
-          test -f robots.txt
-          test -f sitemap.xml
+          test -f index.html || { echo "Missing required file: index.html"; exit 1; }
+          test -f robots.txt || { echo "Missing required file: robots.txt"; exit 1; }
+          test -f sitemap.xml || { echo "Missing required file: sitemap.xml"; exit 1; }
