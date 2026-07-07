@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify repository assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify key assets
+        run: |
+          test -f index.html   || { echo "Missing index.html"; exit 1; }
+          test -f robots.txt   || { echo "Missing robots.txt"; exit 1; }
+          test -f sitemap.xml  || { echo "Missing sitemap.xml"; exit 1; }
