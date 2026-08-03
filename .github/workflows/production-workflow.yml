@@ -1,0 +1,29 @@
+name: Production Workflow
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-workflow-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  production-check:
+    name: Run production workflow
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify key production assets
+        run: |
+          test -f index.html || { echo "Production check failed: missing /index.html at repository root."; exit 1; }
+          test -f robots.txt || { echo "Production check failed: missing /robots.txt at repository root."; exit 1; }
+          test -f sitemap.xml || { echo "Production check failed: missing /sitemap.xml at repository root."; exit 1; }
